@@ -1,0 +1,38 @@
+---
+
+version: "2"
+
+services:
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.4.0
+    environment:
+      - xpack.monitoring.enabled=false
+    expose:
+      - 9200
+    ports:
+      - 9200:9200
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:5.4.0
+    volumes:
+      - ./logstash:/etc/logstash.d
+    command: >
+      --path.config /etc/logstash.d
+      --config.reload.interval 60 
+      --config.reload.automatic
+    environment:
+      - xpack.monitoring.enabled=false
+    expose:
+      - 5044
+    ports:
+      - 5044:5044
+
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:5.4.0
+    volumes:
+      - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
+      - ./logs:/logs
+    
+
+# vi:ts=2:sw=2:et:ft=yaml

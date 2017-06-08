@@ -1,0 +1,24 @@
+#filter {
+#
+#  grok {
+#    match => {
+#      message => [
+#        # your grok pattern here
+#      ]
+#    }
+#  }
+#
+#  date {
+#    match => [
+#      "timestamp",
+#			"ISO8601"
+#    ]
+#  }
+#
+#  if '_dateparsefailure' not in [tags] {
+#    mutate { "remove_field" => [ "timestamp" ] }
+#  }
+#  if '_grokparsefailure' not in [tags] {
+#    mutate { "remove_field" => [ "message" ] }
+#  }
+#}

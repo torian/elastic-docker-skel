@@ -1,0 +1,21 @@
+filebeat:
+
+  prospectors:
+    -
+      paths:
+        - /logs/*
+      input_type: log
+      document_type: some_log
+      fields_under_root: true
+      fields:
+        log_type: a_log
+      # Multiline for Traceback
+      multiline:
+        pattern: "^[[:space:]]+|^[[:alpha:]]+(: )?"
+        negate: false
+        match: after
+
+output:
+  logstash:
+    hosts: [ "logstash:5044" ]
+

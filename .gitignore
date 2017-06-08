@@ -1,0 +1,7 @@
+*.swa
+*.swp
+*.swo
+
+logs/*
+logstash/01_filters.cfg
+
